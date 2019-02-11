@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+# author: Radoslav Grencik <xgrenc00@stud.fit.vutbr.cz>
+
+################################################################################
 
 import sys
 import socket
