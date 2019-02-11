@@ -6,4 +6,4 @@ build:
 	javac -g ./OWclient/src/owclient/Main.java
 
 run: build
-	
+	${api_key} ${city}
