@@ -26,7 +26,6 @@ result = soc.recv(2048) # size of buffer = 2048
 soc.close()
 
 result = str(result, "utf-8")
-wind = result.find("deg")
 
 check = result.split("\r\n")[0]
 if check != "HTTP/1.1 200 OK":
@@ -36,7 +35,7 @@ if check != "HTTP/1.1 200 OK":
 result = result.split("\r\n\r\n")[1]
 jres = json.loads(result)
 
-if wind == -1:
+if ("deg" in result) == False:
     jres["wind"]["deg"] = "-"
 
 print(
