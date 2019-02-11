@@ -37,11 +37,11 @@ jres = json.loads(result)
 
 print(
 """{0}
-overcast:   {1}
+{1}
 temp:       {2} °C
 humidity:   {3} %
 pressure:   {4} hPa
-wind-speed: {5} km/h
+wind-speed: {5} m/s
 wind-deg:   {6}"""
 .format(
 jres["name"],

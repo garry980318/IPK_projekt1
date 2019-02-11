@@ -3,7 +3,7 @@
 ################################################################################
 
 run:
-	python3 OWclient.py ${api_key} ${city}
+	python3 OWclient.py ${api_key} "${city}"
 
 pack:
 	rm -rf xgrenc00.zip
