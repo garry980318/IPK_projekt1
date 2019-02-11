@@ -8,7 +8,7 @@ import socket
 import json
 
 if len(sys.argv) != 3:
-    print("Err: bad args.")
+    print("Err: bad args.", file = sys.stderr)
     sys.exit(1)
 
 appid = sys.argv[1]
@@ -26,14 +26,19 @@ result = soc.recv(2048) # size of buffer = 2048
 soc.close()
 
 result = str(result, "utf-8")
+wind = result.split("wind\":{\"speed\":")[1]
+wind = wind.split("},\"clouds\":{")[0]
 
 check = result.split("\r\n")[0]
 if check != "HTTP/1.1 200 OK":
-    print("Err: bad response.")
+    print("Err: bad response.", file = sys.stderr)
     sys.exit(1)
 
 result = result.split("\r\n\r\n")[1]
 jres = json.loads(result)
+
+if len(wind) == 1:
+    jres["wind"]["deg"] = "-"
 
 print(
 """{0}
