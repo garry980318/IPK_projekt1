@@ -34,6 +34,7 @@ public class OWclient {
                 for (int i = 0; i < 12; i++) {
                     l = sc.nextLine();
                 }
+
                 char[] arr = l.toCharArray();
                 
                 int i = 0, brac = 0;
@@ -44,6 +45,9 @@ public class OWclient {
                     if (arr[i] == '}') {
                         brac--;
                     }
+                    if (arr[i] == '{' || arr[i] == '}' || arr[i] == '"' || arr[i] == '[' || arr[i] == ']') {
+                        arr[i] = 0;
+                    }
                     
                     if (arr[i] == ',' && brac == 1) {
                         arr[i] = '\n';
@@ -51,13 +55,25 @@ public class OWclient {
                     System.out.printf("%c", arr[i]);
                     i++;
                 }
-                while (i >= 0) {
-                    if (arr[i] == '\n') {
-                        i--;
-                        i--;
-                        while (arr[i] != '"') i--;
+                
+                i = 0;
+                int counter = 0;
+                while (i < arr.length) {
+                    if (arr[i] == '\n') counter++;
+                    if (counter == 10) {
+                        i = i + 9;
+                        break;
                     }
-                    i--;
+                    i++;
+                }
+                
+                char[] cityarr = new char[50];
+                counter = 0;
+                while (arr[i] != '\n') {
+                    cityarr[counter] = arr[i];
+                    System.out.printf("%c", cityarr[counter]);
+                    i++;
+                    counter++;
                 }
                 
                 s.close();
