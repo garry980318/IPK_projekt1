@@ -17,12 +17,12 @@ loc = sys.argv[2]
 host = "api.openweathermap.org"
 resource = "/data/2.5/weather?q=" + loc + "&APPID=" + appid +"&units=metric"
 
-req = bytes("GET " + resource + " HTTP/1.1\n" + "Host: " + host + "\r\n\r\n", "utf-8")
+req = bytes("GET " + resource + " HTTP/1.1\n" + "Host: " + host + "\r\n\r\n", "utf-8") # HTTP request
 
-soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-soc.connect((host, 80))
+soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # AF_INET => type of connection, SOCK_STREAM => tcp
+soc.connect((host, 80)) # HTTP port = 80
 soc.send(req)
-result = soc.recv(10000)
+result = soc.recv(2048) # size of buffer = 2048
 soc.close()
 
 result = str(result, "utf-8")
