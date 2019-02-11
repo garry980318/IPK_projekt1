@@ -42,11 +42,13 @@ temp:       {2} °C
 humidity:   {3} %
 pressure:   {4} hPa
 wind-speed: {5} km/h
-wind-deg:   {6}""".format(jres["name"],
-                          jres["weather"][0]["description"],
-                          jres["main"]["temp"],
-                          jres["main"]["humidity"],
-                          jres["main"]["pressure"],
-                          jres["wind"]["speed"],
-                          jres["wind"]["deg"])
-)
+wind-deg:   {6}"""
+.format(
+jres["name"],
+jres["weather"][0]["description"],
+jres["main"]["temp"],
+jres["main"]["humidity"],
+jres["main"]["pressure"],
+jres["wind"]["speed"],
+jres["wind"]["deg"]
+))
