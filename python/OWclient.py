@@ -6,9 +6,10 @@
 import sys
 import socket
 import json
+import time
 
 if len(sys.argv) != 3:
-    print("Err: bad args.", file = sys.stderr)
+    print("ERROR: bad args.", file = sys.stderr)
     sys.exit(1)
 
 appid = sys.argv[1]
@@ -27,9 +28,9 @@ soc.close()
 
 result = str(result, "utf-8")
 
-check = result.split("\r\n")[0]
-if check != "HTTP/1.1 200 OK":
-    print("Err: bad response.", file = sys.stderr)
+check = result.split(" ")[1]
+if check != "200":
+    print("ERROR: {0}.".format(check), file = sys.stderr)
     sys.exit(1)
 
 result = result.split("\r\n\r\n")[1]
@@ -38,20 +39,24 @@ jres = json.loads(result)
 if ("deg" in result) == False:
     jres["wind"]["deg"] = "-"
 
+sunrise = time.ctime(jres["sys"]["sunrise"]).split(" ")[3]
+sunset = time.ctime(jres["sys"]["sunset"]).split(" ")[3]
+
 print(
-"""{0}
+"""Weather in {0}, {7}
 {1}
 temp:       {2} °C
-humidity:   {3} %
 pressure:   {4} hPa
+humidity:   {3} %
+visibility: {8} m
 wind-speed: {5} m/s
-wind-deg:   {6}"""
+wind-deg:   {6}
+cloudiness: {9} %
+sunrise:    {10}
+sunset:     {11}"""
 .format(
-jres["name"],
-jres["weather"][0]["description"],
-jres["main"]["temp"],
-jres["main"]["humidity"],
-jres["main"]["pressure"],
-jres["wind"]["speed"],
-jres["wind"]["deg"]
+jres["name"], jres["weather"][0]["description"], jres["main"]["temp"],
+jres["main"]["humidity"], jres["main"]["pressure"], jres["wind"]["speed"],
+jres["wind"]["deg"], jres["sys"]["country"], jres["visibility"],
+jres["clouds"]["all"], sunrise, sunset
 ))
