@@ -20,10 +20,10 @@ resource = "/data/2.5/weather?q=" + loc + "&APPID=" + appid +"&units=metric"
 
 req = bytes("GET " + resource + " HTTP/1.1\n" + "Host: " + host + "\r\n\r\n", "utf-8") # HTTP request
 
-soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # AF_INET => type of connection, SOCK_STREAM => tcp
+soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # adress (and protocol) family = AF_INET, socket type = SOCK_STREAM
 soc.connect((host, 80)) # HTTP port = 80
 soc.send(req)
-result = soc.recv(2048) # size of buffer = 2048
+result = soc.recv(4096) # size of buffer shoul be a small power of 2 = 4096
 soc.close()
 
 result = str(result, "utf-8")
