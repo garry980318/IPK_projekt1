@@ -18,7 +18,7 @@ loc = sys.argv[2]
 host = "api.openweathermap.org"
 resource = "/data/2.5/weather?q=" + loc + "&APPID=" + appid +"&units=metric"
 
-req = bytes("GET " + resource + " HTTP/1.1\n" + "Host: " + host + "\r\n\r\n", "utf-8") # HTTP request
+req = bytes("GET " + resource + " HTTP/1.1\r\n" + "Host: " + host + "\r\n\r\n", "utf-8") # HTTP request
 
 soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # adress (and protocol) family = AF_INET, socket type = SOCK_STREAM
 soc.connect((host, 80)) # HTTP port = 80
@@ -43,20 +43,28 @@ sunrise = time.ctime(jres["sys"]["sunrise"]).split(" ")[3]
 sunset = time.ctime(jres["sys"]["sunset"]).split(" ")[3]
 
 print(
-"""Weather in {0}, {7}
-{1}
-temp:       {2} °C
+"""Weather in {0}, {1}
+{2}
+temp:       {3} °C
 pressure:   {4} hPa
-humidity:   {3} %
-visibility: {8} m
-wind-speed: {5} m/s
-wind-deg:   {6}
+humidity:   {5} %
+visibility: {6} m
+wind-speed: {7} m/s
+wind-deg:   {8}
 cloudiness: {9} %
 sunrise:    {10}
 sunset:     {11}"""
 .format(
-jres["name"], jres["weather"][0]["description"], jres["main"]["temp"],
-jres["main"]["humidity"], jres["main"]["pressure"], jres["wind"]["speed"],
-jres["wind"]["deg"], jres["sys"]["country"], jres["visibility"],
-jres["clouds"]["all"], sunrise, sunset
+jres["name"],
+jres["sys"]["country"],
+jres["weather"][0]["description"],
+jres["main"]["temp"],
+jres["main"]["pressure"],
+jres["main"]["humidity"],
+jres["visibility"],
+jres["wind"]["speed"],
+jres["wind"]["deg"],
+jres["clouds"]["all"],
+sunrise,
+sunset
 ))
