@@ -7,6 +7,7 @@ import sys
 import socket
 import json
 import time
+import re
 
 if len(sys.argv) != 3:
     print("ERROR: bad args.", file = sys.stderr)
@@ -39,8 +40,8 @@ jres = json.loads(result)
 if ("deg" in result) == False:
     jres["wind"]["deg"] = "-"
 
-sunrise = time.ctime(jres["sys"]["sunrise"]).split(" ")[3]
-sunset = time.ctime(jres["sys"]["sunset"]).split(" ")[3]
+sunrise = re.search("(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]", time.ctime(jres["sys"]["sunrise"])).group()
+sunset = re.search("(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]", time.ctime(jres["sys"]["sunset"])).group()
 
 print(
 """Weather in {0}, {1}
