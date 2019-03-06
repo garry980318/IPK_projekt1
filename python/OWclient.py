@@ -9,9 +9,12 @@ import json
 import time
 import re
 
+def Err(retval, msg):
+    print("ERROR: {0}.".format(msg), file = sys.stderr)
+    sys.exit(retval)
+    
 if len(sys.argv) != 3:
-    print("ERROR: bad args.", file = sys.stderr)
-    sys.exit(1)
+    Err(1, "bad args")
 
 appid = sys.argv[1]
 loc = sys.argv[2]
@@ -22,7 +25,11 @@ resource = "/data/2.5/weather?q=" + loc + "&APPID=" + appid +"&units=metric"
 req = bytes("GET " + resource + " HTTP/1.1\r\n" + "Host: " + host + "\r\n\r\n", "utf-8") # HTTP request
 
 soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # adress (and protocol) family = AF_INET, socket type = SOCK_STREAM
-soc.connect((host, 80)) # HTTP port = 80
+try:
+    soc.connect((host, 80)) # HTTP port = 80
+except:
+    Err(1, "can't connect")
+
 soc.send(req)
 result = soc.recv(4096) # size of buffer shoul be a small power of 2 = 4096
 soc.close()
@@ -31,8 +38,7 @@ result = str(result, "utf-8")
 
 check = result.split(" ")[1]
 if check != "200":
-    print("ERROR: {0}.".format(check), file = sys.stderr)
-    sys.exit(1)
+    Err(check, check)
 
 result = result.split("\r\n\r\n")[1]
 jres = json.loads(result)
