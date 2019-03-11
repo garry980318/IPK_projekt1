@@ -12,7 +12,7 @@ import re
 def Err(retval, msg):
     print("ERROR: {0}.".format(msg), file = sys.stderr)
     sys.exit(retval)
-    
+
 if len(sys.argv) != 3:
     Err(1, "bad args")
 
@@ -38,7 +38,7 @@ result = str(result, "utf-8")
 
 check = result.split(" ")[1]
 if check != "200":
-    Err(check, check)
+    Err(1, check)
 
 result = result.split("\r\n\r\n")[1]
 jres = json.loads(result)
