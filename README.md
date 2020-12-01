@@ -1,2 +1,2 @@
-# IPK_projekt1
-Klient pro OpenWeatherMap API
+# IPK projekt 1
+OpenWeatherMap API klient
